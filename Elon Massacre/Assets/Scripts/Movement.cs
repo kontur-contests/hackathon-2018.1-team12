@@ -20,6 +20,11 @@ public class Movement : MonoBehaviour {
     void FixedUpdate() {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
+        float r = Input.GetAxis("Mouse X");
+
+        gameObject.transform.Rotate(0f, r, 0f);
+
+        //gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, gameObject.transform.rotation.eulerAngles.y + r, 0f), 0.5f);
 
         Move(h, v);
         if (Input.GetKey(KeyCode.Space) && !inJump) {
@@ -29,13 +34,13 @@ public class Movement : MonoBehaviour {
 
     void Move(float h, float v) {
         movement.Set(h, 0, v);
-        movement = movement.normalized * Speed * Time.deltaTime;
-        elonRigidbody.MovePosition(transform.position + movement);
+        movement = gameObject.transform.rotation * movement.normalized * Speed * Time.deltaTime;
+        gameObject.transform.position += movement;
     }
 
     void Jump() {
         inJump = true;
-
+            
         var jumpVector = new Vector3(0, JumpForce, 0);
         elonRigidbody.AddForce(jumpVector);
     }
