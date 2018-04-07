@@ -2,7 +2,7 @@ namespace UnityEngine.PostProcessing
 {
     public sealed class FxaaComponent : PostProcessingComponentRenderTexture<AntialiasingModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _QualitySettings = Shader.PropertyToID("_QualitySettings");
             internal static readonly int _ConsoleSettings = Shader.PropertyToID("_ConsoleSettings");

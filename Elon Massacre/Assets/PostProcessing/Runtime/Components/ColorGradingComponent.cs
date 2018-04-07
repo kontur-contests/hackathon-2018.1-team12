@@ -4,7 +4,7 @@ namespace UnityEngine.PostProcessing
 
     public sealed class ColorGradingComponent : PostProcessingComponentRenderTexture<ColorGradingModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _LutParams                = Shader.PropertyToID("_LutParams");
             internal static readonly int _NeutralTonemapperParams1 = Shader.PropertyToID("_NeutralTonemapperParams1");
@@ -28,12 +28,12 @@ namespace UnityEngine.PostProcessing
             internal static readonly int _ExposureEV               = Shader.PropertyToID("_ExposureEV");
         }
 
-        const int k_InternalLogLutSize = 32;
-        const int k_CurvePrecision = 128;
-        const float k_CurveStep = 1f / k_CurvePrecision;
+        private const int k_InternalLogLutSize = 32;
+        private const int k_CurvePrecision = 128;
+        private const float k_CurveStep = 1f / k_CurvePrecision;
 
-        Texture2D m_GradingCurves;
-        Color[] m_pixels = new Color[k_CurvePrecision * 2];
+        private Texture2D m_GradingCurves;
+        private Color[] m_pixels = new Color[k_CurvePrecision * 2];
 
         public override bool active
         {
@@ -47,14 +47,14 @@ namespace UnityEngine.PostProcessing
         // An analytical model of chromaticity of the standard illuminant, by Judd et al.
         // http://en.wikipedia.org/wiki/Standard_illuminant#Illuminant_series_D
         // Slightly modifed to adjust it with the D65 white point (x=0.31271, y=0.32902).
-        float StandardIlluminantY(float x)
+        private float StandardIlluminantY(float x)
         {
             return 2.87f * x - 3f * x * x - 0.27509507f;
         }
 
         // CIE xy chromaticity to CAT02 LMS.
         // http://en.wikipedia.org/wiki/LMS_color_space#CAT02
-        Vector3 CIExyToLMS(float x, float y)
+        private Vector3 CIExyToLMS(float x, float y)
         {
             float Y = 1f;
             float X = Y * x / y;
@@ -67,7 +67,7 @@ namespace UnityEngine.PostProcessing
             return new Vector3(L, M, S);
         }
 
-        Vector3 CalculateColorBalance(float temperature, float tint)
+        private Vector3 CalculateColorBalance(float temperature, float tint)
         {
             // Range ~[-1.8;1.8] ; using higher ranges is unsafe
             float t1 = temperature / 55f;
@@ -84,7 +84,7 @@ namespace UnityEngine.PostProcessing
             return new Vector3(w1.x / w2.x, w1.y / w2.y, w1.z / w2.z);
         }
 
-        static Color NormalizeColor(Color c)
+        private static Color NormalizeColor(Color c)
         {
             float sum = (c.r + c.g + c.b) / 3f;
 
@@ -100,7 +100,7 @@ namespace UnityEngine.PostProcessing
                    };
         }
 
-        static Vector3 ClampVector(Vector3 v, float min, float max)
+        private static Vector3 ClampVector(Vector3 v, float min, float max)
         {
             return new Vector3(
                 Mathf.Clamp(v.x, min, max),
@@ -223,7 +223,7 @@ namespace UnityEngine.PostProcessing
             outOffset = GetOffsetValue(offset);
         }
 
-        TextureFormat GetCurveFormat()
+        private TextureFormat GetCurveFormat()
         {
             if (SystemInfo.SupportsTextureFormat(TextureFormat.RGBAHalf))
                 return TextureFormat.RGBAHalf;
@@ -231,7 +231,7 @@ namespace UnityEngine.PostProcessing
             return TextureFormat.RGBA32;
         }
 
-        Texture2D GetCurveTexture()
+        private Texture2D GetCurveTexture()
         {
             if (m_GradingCurves == null)
             {
@@ -274,12 +274,12 @@ namespace UnityEngine.PostProcessing
             return m_GradingCurves;
         }
 
-        bool IsLogLutValid(RenderTexture lut)
+        private bool IsLogLutValid(RenderTexture lut)
         {
             return lut != null && lut.IsCreated() && lut.height == k_InternalLogLutSize;
         }
 
-        RenderTextureFormat GetLutFormat()
+        private RenderTextureFormat GetLutFormat()
         {
             if (SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.ARGBHalf))
                 return RenderTextureFormat.ARGBHalf;
@@ -287,7 +287,7 @@ namespace UnityEngine.PostProcessing
             return RenderTextureFormat.ARGB32;
         }
 
-        void GenerateLut()
+        private void GenerateLut()
         {
             var settings = model.settings;
 

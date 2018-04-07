@@ -4,7 +4,7 @@ namespace UnityEngine.PostProcessing
 {
     public sealed class FogComponent : PostProcessingComponentCommandBuffer<FogModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _FogColor = Shader.PropertyToID("_FogColor");
             internal static readonly int _Density  = Shader.PropertyToID("_Density");
@@ -13,7 +13,7 @@ namespace UnityEngine.PostProcessing
             internal static readonly int _TempRT   = Shader.PropertyToID("_TempRT");
         }
 
-        const string k_ShaderString = "Hidden/Post FX/Fog";
+        private const string k_ShaderString = "Hidden/Post FX/Fog";
 
         public override bool active
         {

@@ -2,7 +2,7 @@ namespace UnityEngine.PostProcessing
 {
     public sealed class EyeAdaptationComponent : PostProcessingComponentRenderTexture<EyeAdaptationModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _Params               = Shader.PropertyToID("_Params");
             internal static readonly int _Speed                = Shader.PropertyToID("_Speed");
@@ -12,23 +12,23 @@ namespace UnityEngine.PostProcessing
             internal static readonly int _DebugWidth           = Shader.PropertyToID("_DebugWidth");
         }
 
-        ComputeShader m_EyeCompute;
-        ComputeBuffer m_HistogramBuffer;
+        private ComputeShader m_EyeCompute;
+        private ComputeBuffer m_HistogramBuffer;
 
-        readonly RenderTexture[] m_AutoExposurePool = new RenderTexture[2];
-        int m_AutoExposurePingPing;
-        RenderTexture m_CurrentAutoExposure;
+        private readonly RenderTexture[] m_AutoExposurePool = new RenderTexture[2];
+        private int m_AutoExposurePingPing;
+        private RenderTexture m_CurrentAutoExposure;
 
-        RenderTexture m_DebugHistogram;
+        private RenderTexture m_DebugHistogram;
 
-        static uint[] s_EmptyHistogramBuffer;
+        private static uint[] s_EmptyHistogramBuffer;
 
-        bool m_FirstFrame = true;
+        private bool m_FirstFrame = true;
 
         // Don't forget to update 'EyeAdaptation.cginc' if you change these values !
-        const int k_HistogramBins = 64;
-        const int k_HistogramThreadX = 16;
-        const int k_HistogramThreadY = 16;
+        private const int k_HistogramBins = 64;
+        private const int k_HistogramThreadX = 16;
+        private const int k_HistogramThreadY = 16;
 
         public override bool active
         {
@@ -66,7 +66,7 @@ namespace UnityEngine.PostProcessing
             m_DebugHistogram = null;
         }
 
-        Vector4 GetHistogramScaleOffsetRes()
+        private Vector4 GetHistogramScaleOffsetRes()
         {
             var settings = model.settings;
             float diff = settings.logMax - settings.logMin;

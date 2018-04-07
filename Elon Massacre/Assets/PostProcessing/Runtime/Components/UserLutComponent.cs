@@ -2,7 +2,7 @@ namespace UnityEngine.PostProcessing
 {
     public sealed class UserLutComponent : PostProcessingComponentRenderTexture<UserLutModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _UserLut        = Shader.PropertyToID("_UserLut");
             internal static readonly int _UserLut_Params = Shader.PropertyToID("_UserLut_Params");

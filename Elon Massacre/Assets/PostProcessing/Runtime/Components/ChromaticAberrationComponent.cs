@@ -2,13 +2,13 @@ namespace UnityEngine.PostProcessing
 {
     public sealed class ChromaticAberrationComponent : PostProcessingComponentRenderTexture<ChromaticAberrationModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _ChromaticAberration_Amount   = Shader.PropertyToID("_ChromaticAberration_Amount");
             internal static readonly int _ChromaticAberration_Spectrum = Shader.PropertyToID("_ChromaticAberration_Spectrum");
         }
 
-        Texture2D m_SpectrumLut;
+        private Texture2D m_SpectrumLut;
 
         public override bool active
         {

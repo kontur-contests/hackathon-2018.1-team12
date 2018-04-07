@@ -7,7 +7,7 @@ namespace UnityEngine.PostProcessing
 
     public sealed class MaterialFactory : IDisposable
     {
-        Dictionary<string, Material> m_Materials;
+        private Dictionary<string, Material> m_Materials;
 
         public MaterialFactory()
         {

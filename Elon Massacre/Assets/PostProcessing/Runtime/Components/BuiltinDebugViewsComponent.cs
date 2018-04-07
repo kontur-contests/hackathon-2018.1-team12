@@ -7,7 +7,7 @@ namespace UnityEngine.PostProcessing
 
     public sealed class BuiltinDebugViewsComponent : PostProcessingComponentCommandBuffer<BuiltinDebugViewsModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _DepthScale = Shader.PropertyToID("_DepthScale");
             internal static readonly int _TempRT     = Shader.PropertyToID("_TempRT");
@@ -18,9 +18,9 @@ namespace UnityEngine.PostProcessing
             internal static readonly int _Scale      = Shader.PropertyToID("_Scale");
         }
 
-        const string k_ShaderString = "Hidden/Post FX/Builtin Debug Views";
+        private const string k_ShaderString = "Hidden/Post FX/Builtin Debug Views";
 
-        enum Pass
+        private enum Pass
         {
             Depth,
             Normals,
@@ -29,9 +29,9 @@ namespace UnityEngine.PostProcessing
             MovecArrows
         }
 
-        ArrowArray m_Arrows;
+        private ArrowArray m_Arrows;
 
-        class ArrowArray
+        private class ArrowArray
         {
             public Mesh mesh { get; private set; }
 
@@ -166,7 +166,7 @@ namespace UnityEngine.PostProcessing
             context.Interrupt();
         }
 
-        void DepthPass(CommandBuffer cb)
+        private void DepthPass(CommandBuffer cb)
         {
             var material = context.materialFactory.Get(k_ShaderString);
             var settings = model.settings.depth;
@@ -175,13 +175,13 @@ namespace UnityEngine.PostProcessing
             cb.Blit((Texture)null, BuiltinRenderTextureType.CameraTarget, material, (int)Pass.Depth);
         }
 
-        void DepthNormalsPass(CommandBuffer cb)
+        private void DepthNormalsPass(CommandBuffer cb)
         {
             var material = context.materialFactory.Get(k_ShaderString);
             cb.Blit((Texture)null, BuiltinRenderTextureType.CameraTarget, material, (int)Pass.Normals);
         }
 
-        void MotionVectorsPass(CommandBuffer cb)
+        private void MotionVectorsPass(CommandBuffer cb)
         {
 #if UNITY_EDITOR
             // Don't render motion vectors preview when the editor is not playing as it can in some
@@ -232,7 +232,7 @@ namespace UnityEngine.PostProcessing
             cb.ReleaseTemporaryRT(tempRT);
         }
 
-        void PrepareArrows()
+        private void PrepareArrows()
         {
             int row = model.settings.motionVectors.motionVectorsResolution;
             int col = row * Screen.width / Screen.height;

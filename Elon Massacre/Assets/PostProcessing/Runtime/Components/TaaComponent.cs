@@ -4,7 +4,7 @@ namespace UnityEngine.PostProcessing
 {
     public sealed class TaaComponent : PostProcessingComponentRenderTexture<AntialiasingModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static int _Jitter               = Shader.PropertyToID("_Jitter");
             internal static int _SharpenParameters    = Shader.PropertyToID("_SharpenParameters");
@@ -13,15 +13,15 @@ namespace UnityEngine.PostProcessing
             internal static int _MainTex              = Shader.PropertyToID("_MainTex");
         }
 
-        const string k_ShaderString = "Hidden/Post FX/Temporal Anti-aliasing";
-        const int k_SampleCount = 8;
+        private const string k_ShaderString = "Hidden/Post FX/Temporal Anti-aliasing";
+        private const int k_SampleCount = 8;
 
-        readonly RenderBuffer[] m_MRT = new RenderBuffer[2];
+        private readonly RenderBuffer[] m_MRT = new RenderBuffer[2];
 
-        int m_SampleIndex = 0;
-        bool m_ResetHistory = true;
+        private int m_SampleIndex = 0;
+        private bool m_ResetHistory = true;
 
-        RenderTexture m_HistoryTexture;
+        private RenderTexture m_HistoryTexture;
 
         public override bool active
         {
@@ -119,7 +119,7 @@ namespace UnityEngine.PostProcessing
             m_ResetHistory = false;
         }
 
-        float GetHaltonValue(int index, int radix)
+        private float GetHaltonValue(int index, int radix)
         {
             float result = 0f;
             float fraction = 1f / (float)radix;
@@ -135,7 +135,7 @@ namespace UnityEngine.PostProcessing
             return result;
         }
 
-        Vector2 GenerateRandomOffset()
+        private Vector2 GenerateRandomOffset()
         {
             var offset = new Vector2(
                     GetHaltonValue(m_SampleIndex & 1023, 2),
@@ -149,7 +149,7 @@ namespace UnityEngine.PostProcessing
 
         // Adapted heavily from PlayDead's TAA code
         // https://github.com/playdeadgames/temporal/blob/master/Assets/Scripts/Extensions.cs
-        Matrix4x4 GetPerspectiveProjectionMatrix(Vector2 offset)
+        private Matrix4x4 GetPerspectiveProjectionMatrix(Vector2 offset)
         {
             float vertical = Mathf.Tan(0.5f * Mathf.Deg2Rad * context.camera.fieldOfView);
             float horizontal = vertical * context.camera.aspect;
@@ -187,7 +187,7 @@ namespace UnityEngine.PostProcessing
             return matrix;
         }
 
-        Matrix4x4 GetOrthographicProjectionMatrix(Vector2 offset)
+        private Matrix4x4 GetOrthographicProjectionMatrix(Vector2 offset)
         {
             float vertical = context.camera.orthographicSize;
             float horizontal = vertical * context.camera.aspect;

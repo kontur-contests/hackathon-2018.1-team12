@@ -7,7 +7,7 @@ namespace UnityEngine.PostProcessing
 
     public sealed class ScreenSpaceReflectionComponent : PostProcessingComponentCommandBuffer<ScreenSpaceReflectionModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _RayStepSize                = Shader.PropertyToID("_RayStepSize");
             internal static readonly int _AdditiveReflection         = Shader.PropertyToID("_AdditiveReflection");
@@ -47,12 +47,12 @@ namespace UnityEngine.PostProcessing
         }
 
         // Unexposed variables
-        bool k_HighlightSuppression = false;
-        bool k_TraceBehindObjects = true;
-        bool k_TreatBackfaceHitAsMiss = false;
-        bool k_BilateralUpsample = true;
+        private bool k_HighlightSuppression = false;
+        private bool k_TraceBehindObjects = true;
+        private bool k_TreatBackfaceHitAsMiss = false;
+        private bool k_BilateralUpsample = true;
 
-        enum PassIndex
+        private enum PassIndex
         {
             RayTraceStep = 0,
             CompositeFinal = 1,
@@ -65,7 +65,7 @@ namespace UnityEngine.PostProcessing
             PoissonBlur = 8,
         }
 
-        readonly int[] m_ReflectionTextures = new int[5];
+        private readonly int[] m_ReflectionTextures = new int[5];
 
         // Not really needed as SSR only works in deferred right now
         public override DepthTextureMode GetCameraFlags()

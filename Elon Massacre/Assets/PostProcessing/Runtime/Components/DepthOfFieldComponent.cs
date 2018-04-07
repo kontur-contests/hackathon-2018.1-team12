@@ -6,7 +6,7 @@ namespace UnityEngine.PostProcessing
 
     public sealed class DepthOfFieldComponent : PostProcessingComponentRenderTexture<DepthOfFieldModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _DepthOfFieldTex    = Shader.PropertyToID("_DepthOfFieldTex");
             internal static readonly int _DepthOfFieldCoCTex = Shader.PropertyToID("_DepthOfFieldCoCTex");
@@ -21,7 +21,7 @@ namespace UnityEngine.PostProcessing
             internal static readonly int _DepthOfFieldParams = Shader.PropertyToID("_DepthOfFieldParams");
         }
 
-        const string k_ShaderString = "Hidden/Post FX/Depth Of Field";
+        private const string k_ShaderString = "Hidden/Post FX/Depth Of Field";
 
         public override bool active
         {
@@ -37,12 +37,12 @@ namespace UnityEngine.PostProcessing
             return DepthTextureMode.Depth;
         }
 
-        RenderTexture m_CoCHistory;
+        private RenderTexture m_CoCHistory;
 
         // Height of the 35mm full-frame format (36mm x 24mm)
-        const float k_FilmHeight = 0.024f;
+        private const float k_FilmHeight = 0.024f;
 
-        float CalculateFocalLength()
+        private float CalculateFocalLength()
         {
             var settings = model.settings;
 
@@ -53,7 +53,7 @@ namespace UnityEngine.PostProcessing
             return 0.5f * k_FilmHeight / Mathf.Tan(0.5f * fov);
         }
 
-        float CalculateMaxCoCRadius(int screenHeight)
+        private float CalculateMaxCoCRadius(int screenHeight)
         {
             // Estimate the allowable maximum radius of CoC from the kernel
             // size (the equation below was empirically derived).
@@ -64,13 +64,13 @@ namespace UnityEngine.PostProcessing
             return Mathf.Min(0.05f, radiusInPixels / screenHeight);
         }
 
-        bool CheckHistory(int width, int height)
+        private bool CheckHistory(int width, int height)
         {
             return m_CoCHistory != null && m_CoCHistory.IsCreated() &&
                 m_CoCHistory.width == width && m_CoCHistory.height == height;
         }
 
-        RenderTextureFormat SelectFormat(RenderTextureFormat primary, RenderTextureFormat secondary)
+        private RenderTextureFormat SelectFormat(RenderTextureFormat primary, RenderTextureFormat secondary)
         {
             if (SystemInfo.SupportsRenderTextureFormat(primary)) return primary;
             if (SystemInfo.SupportsRenderTextureFormat(secondary)) return secondary;

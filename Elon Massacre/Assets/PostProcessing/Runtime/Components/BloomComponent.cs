@@ -2,7 +2,7 @@ namespace UnityEngine.PostProcessing
 {
     public sealed class BloomComponent : PostProcessingComponentRenderTexture<BloomModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _AutoExposure        = Shader.PropertyToID("_AutoExposure");
             internal static readonly int _Threshold           = Shader.PropertyToID("_Threshold");
@@ -16,9 +16,9 @@ namespace UnityEngine.PostProcessing
             internal static readonly int _Bloom_DirtIntensity = Shader.PropertyToID("_Bloom_DirtIntensity");
         }
 
-        const int k_MaxPyramidBlurLevel = 16;
-        readonly RenderTexture[] m_BlurBuffer1 = new RenderTexture[k_MaxPyramidBlurLevel];
-        readonly RenderTexture[] m_BlurBuffer2 = new RenderTexture[k_MaxPyramidBlurLevel];
+        private const int k_MaxPyramidBlurLevel = 16;
+        private readonly RenderTexture[] m_BlurBuffer1 = new RenderTexture[k_MaxPyramidBlurLevel];
+        private readonly RenderTexture[] m_BlurBuffer2 = new RenderTexture[k_MaxPyramidBlurLevel];
 
         public override bool active
         {

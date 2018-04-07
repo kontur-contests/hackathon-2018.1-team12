@@ -6,7 +6,7 @@ namespace UnityEngine.PostProcessing
 
     public sealed class AmbientOcclusionComponent : PostProcessingComponentCommandBuffer<AmbientOcclusionModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _Intensity         = Shader.PropertyToID("_Intensity");
             internal static readonly int _Radius            = Shader.PropertyToID("_Radius");
@@ -20,23 +20,23 @@ namespace UnityEngine.PostProcessing
             internal static readonly int _TempRT            = Shader.PropertyToID("_TempRT");
         }
 
-        const string k_BlitShaderString = "Hidden/Post FX/Blit";
-        const string k_ShaderString = "Hidden/Post FX/Ambient Occlusion";
+        private const string k_BlitShaderString = "Hidden/Post FX/Blit";
+        private const string k_ShaderString = "Hidden/Post FX/Ambient Occlusion";
 
-        readonly RenderTargetIdentifier[] m_MRT =
+        private readonly RenderTargetIdentifier[] m_MRT =
         {
             BuiltinRenderTextureType.GBuffer0, // Albedo, Occ
             BuiltinRenderTextureType.CameraTarget // Ambient
         };
 
-        enum OcclusionSource
+        private enum OcclusionSource
         {
             DepthTexture,
             DepthNormalsTexture,
             GBuffer
         }
 
-        OcclusionSource occlusionSource
+        private OcclusionSource occlusionSource
         {
             get
             {
@@ -50,7 +50,7 @@ namespace UnityEngine.PostProcessing
             }
         }
 
-        bool ambientOnlySupported
+        private bool ambientOnlySupported
         {
             get { return context.isHdr && model.settings.ambientOnly && context.isGBufferAvailable && !model.settings.forceForwardCompatibility; }
         }

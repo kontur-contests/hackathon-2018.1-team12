@@ -2,7 +2,7 @@ namespace UnityEngine.PostProcessing
 {
     public sealed class GrainComponent : PostProcessingComponentRenderTexture<GrainModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _Grain_Params1 = Shader.PropertyToID("_Grain_Params1");
             internal static readonly int _Grain_Params2 = Shader.PropertyToID("_Grain_Params2");
@@ -21,7 +21,7 @@ namespace UnityEngine.PostProcessing
             }
         }
 
-        RenderTexture m_GrainLookupRT;
+        private RenderTexture m_GrainLookupRT;
 
         public override void OnDisable()
         {

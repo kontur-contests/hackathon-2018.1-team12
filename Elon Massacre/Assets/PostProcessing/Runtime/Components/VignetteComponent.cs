@@ -2,7 +2,7 @@ namespace UnityEngine.PostProcessing
 {
     public sealed class VignetteComponent : PostProcessingComponentRenderTexture<VignetteModel>
     {
-        static class Uniforms
+        private static class Uniforms
         {
             internal static readonly int _Vignette_Color    = Shader.PropertyToID("_Vignette_Color");
             internal static readonly int _Vignette_Center   = Shader.PropertyToID("_Vignette_Center");

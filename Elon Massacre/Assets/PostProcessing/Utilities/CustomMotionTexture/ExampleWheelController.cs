@@ -5,20 +5,20 @@ public class ExampleWheelController : MonoBehaviour
     public float acceleration;
     public Renderer motionVectorRenderer; // Reference to the custom motion vector renderer
 
-    Rigidbody m_Rigidbody;
+    private Rigidbody m_Rigidbody;
 
-    static class Uniforms
+    private static class Uniforms
     {
         internal static readonly int _MotionAmount = Shader.PropertyToID("_MotionAmount");
     }
 
-    void Start()
+    private void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>(); // Get reference to rigidbody
         m_Rigidbody.maxAngularVelocity = 100; // Set max velocity for rigidbody
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKey (KeyCode.UpArrow)) // Rotate forward
             m_Rigidbody.AddRelativeTorque(new Vector3(-1 * acceleration, 0, 0), ForceMode.Acceleration); // Add forward torque to mesh

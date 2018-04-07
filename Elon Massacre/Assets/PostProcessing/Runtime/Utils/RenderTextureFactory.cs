@@ -5,7 +5,7 @@ namespace UnityEngine.PostProcessing
 {
     public sealed class RenderTextureFactory : IDisposable
     {
-        HashSet<RenderTexture> m_TemporaryRTs;
+        private HashSet<RenderTexture> m_TemporaryRTs;
 
         public RenderTextureFactory()
         {
