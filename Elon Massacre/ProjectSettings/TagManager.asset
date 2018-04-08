@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Terrain
+  - Elon
+  - EnemyPillar
+  - Enemy
+  - Bullet
+  - FirstAidKit
   layers:
   - Default
   - TransparentFX
@@ -15,7 +20,7 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
+  - EnemyLayer
   - 
   - 
   - 
